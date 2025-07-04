@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Login Page</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/jsx">
+      const app = document.getElementById("app");
+
+      function Header({ title }) {
+        return <h2>{title ? title : "Login Page"}</h2>;
+      }
+
+      function LoginForm({ onLogin }) {
+        const [email, setEmail] = React.useState("");
+        const [password, setPassword] = React.useState("");
+
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          onLogin(email); 
+        };
+
+        return (
+          <form onSubmit={handleSubmit}>
+            <Header title="" />
+            <div>
+              <label>Email:</label><br />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <br />
+            <div>
+              <label>Password:</label><br />
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <br />
+            <button type="submit">Login</button>
+          </form>
+        );
+      }
+
+      function HomePage() {
+        const [user, setUser] = React.useState(null);
+
+        const handleLogin = (email) => {
+          setUser({ email }); 
+          alert("Login Successful!!");
+        };
+
+        return (
+          <div>
+            {user ? (
+              <h3>Welcome, {user.email}!</h3>
+            ) : (
+              <LoginForm onLogin={handleLogin} />
+            )}
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(app);
+      root.render(<HomePage />);
+    </script>
+  </body>
+</html>
